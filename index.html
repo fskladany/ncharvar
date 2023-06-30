@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> 八卦掌 ba gua zhang</title>
+    <link rel="stylesheet" type="text/css" href="html.css">
+
+  <script>
+  window.onload = function() {
+      // Your JavaScript code here
+      // Additional code...
+    
+let baguaData = [
+{binary: '1111', char: '天', trigram: '☰', name: '🌌', vocal: 'Tiān', emoji: 'heaven'},
+{binary: '0000', char: '地', trigram: '☷', name: '🌍', vocal: 'Dì', emoji: 'earth'},
+{binary: '0101', char: '水', trigram: '☵', name: '💧', vocal: 'Shuǐ', emoji: 'water'},
+{binary: '1010', char: '火', trigram: '☲', name: '🔥', vocal: 'Huǒ', emoji: 'fire'},
+{binary: '1001', char: '雷', trigram: '☳', name: '⛈️', vocal: 'Léi', emoji: 'thunder'},
+{binary: '0110', char: '风', trigram: '☴', name: '🌬️', vocal: 'Fēng', emoji: 'wind'},
+{binary: '0011', char: '山', trigram: '☶', name: '⛰️', vocal: 'Shān', emoji: 'mountain'},
+{binary: '1100', char: '泽', trigram: '☱', name: '🏞️', vocal: 'Zé', emoji: 'lake'},
+{binary: '1110', char: '云', trigram: '☰☷', name: '☁️', vocal: 'Yún', emoji: 'cloud'},
+{binary: '0001', char: '雪', trigram: '☷☰', name: '❄️', vocal: 'Xuě', emoji: 'snow'},
+{binary: '1011', char: '烟', trigram: '☲☵', name: '💨', vocal: 'Yān', emoji: 'smoke'},
+{binary: '0100', char: '石', trigram: '☵☲', name: '🪨', vocal: 'Shí', emoji: 'stone'},
+{binary: '1000', char: '沙', trigram: '☳☱', name: '🏖️', vocal: 'Shā', emoji: 'sand'},
+{binary: '0111', char: '林', trigram: '☴☰', name: '🌳', vocal: 'Lín', emoji: 'forest'},
+{binary: '0010', char: '雾',trigram: '☶☳', name: '🌫️', vocal: 'Wù', emoji: 'fog'},
+{binary: '1101', char: '海', trigram: '☱☶', name: '🌊', vocal: 'Hǎi', emoji: 'sea'},
+];
+baguaData.sort((a, b) => a.decimal - b.decimal);
+
+let tableBody = document.querySelector('#baguaTable tbody');
+
+for (let item of baguaData) {
+    let row = document.createElement('tr');
+    
+    let binaryCell = document.createElement('td');
+    binaryCell.textContent = item.binary;
+    row.appendChild(binaryCell);
+    
+    let nameCell = document.createElement('td');
+    nameCell.textContent = item.name;
+    row.appendChild(nameCell);
+    
+    let immunneCell = document.createElement('td');
+    immunneCell.textContent = item.char;
+    row.appendChild(immunneCell);
+    
+    let trigramCell = document.createElement('td');
+    trigramCell.textContent = item.trigram;
+    row.appendChild(trigramCell);
+    
+    let vocalCell = document.createElement('td');
+    vocalCell.textContent = item.vocal;
+    row.appendChild(vocalCell);
+    
+    let emojiCell = document.createElement('td');
+    emojiCell.textContent = item.emoji;
+    row.appendChild(emojiCell);
+    
+    tableBody.appendChild(row);
+}
+
+let cells = document.querySelectorAll('#baguaTable td');
+
+for (let cell of cells) {
+    let radius = Math.random() * 120; // Change 50 to whatever maximum radius you want
+    cell.style.transformOrigin = `${radius}px ${radius}px`;
+}
+
+let gradient = document.querySelector('#gradient');
+
+document.addEventListener('mousemove', function(event) {
+    let x = event.clientX;
+    let y = event.clientY;
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
+    let size = Math.max(Math.abs(windowWidth / 2 - x), Math.abs(windowHeight / 2 - y)) * 0.5;
+    
+    gradient.style.transform = `translate(-50%, -50%) scale(${size / 200})`;
+    gradient.style.left = `${x}px`;
+    gradient.style.top = `${y}px`;
+});
+
+cells = document.querySelectorAll('#baguaTable td');
+
+for (let cell of cells) {
+    cell.addEventListener('mousedown', function() {
+        cell.style.animationPlayState = 'paused';
+    });
+
+    cell.addEventListener('mouseup', function() {
+        if (window.getSelection().toString() === '') {
+            cell.style.animationPlayState = 'running';
+        }
+    });
+
+    cell.addEventListener('mouseout', function() {
+        if (window.getSelection().toString() === '') {
+            cell.style.animationPlayState = 'running';
+        }
+    });
+
+}
+
+cells = document.querySelectorAll('#baguaTable td');
+
+for (let cell of cells) {
+    setInterval(function() {
+        if (Math.random() < 0.5) {
+            let direction = cell.style.animationDirection === 'normal' ? 'reverse' : 'normal';
+            cell.style.animationDirection = direction;
+        }
+    }, 6000); // Run the function every 10 seconds
+}};
+  </script>
+ 
+<style>
+body {
+    background: linear-gradient(45deg, #3f87a6, #ebf8e1, #f69d3c);
+    background-size: 600% 600%;
+    animation: gradient 16s ease infinite;
+    cursor: none;
+}
+
+@keyframes hue-rotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+
+
+#gradient {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    background: radial-gradient(circle at center, rgba(255, 0, 0, 0.2), rgba(255, 255, 0, 0.5), rgba(0, 255, 0, 0.6), rgba(0, 0, 255, 0.5), rgba(75, 0, 130, 0.2), rgba(238, 130, 238, 0));
+    transition: background-position 0.1s, transform 0.1s;
+    animation: hue-rotate 5s linear infinite;
+}
+
+@keyframes gradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+        transform: translatex(0px);
+    }
+    50% {
+        transform: translatey(-20px);
+        transform: translatex(20px);
+    }
+    100% {
+        transform: translatey(0px);
+        transform: translatex(0px);
+    }
+}
+
+@keyframes circular {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+#baguaTable {
+    border-collapse: collapse;
+    width: 50em;
+    margin: 0% auto;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    transform: rotateX(60deg) rotateZ(-30deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    animation: float 5s ease-in-out infinite;
+}
+
+#baguaTable:hover {
+    transform: rotateX(0) rotateZ(0);
+    animation: float 3s ease-in-out infinite;
+}
+
+#baguaTable td {
+    position: relative;
+    animation: circular 15s linear infinite;
+    animation-play-state: paused;
+    font-weight: bold;
+    color: 0;
+    font-size: 1.2em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s;
+}
+
+#baguaTable td:nth-child(2), #baguaTable td:nth-child(4) {
+    font-size: 2em;
+}
+
+#baguaTable td:hover {
+    animation-play-state: running;
+}
+
+#baguaTable td.force-effect::after {
+    width: 200%;
+    height: 200%;
+}
+
+#baguaTable td::selection {
+    color: red;
+    font-weight: 1px;
+}
+
+
+#baguaTable th, #baguaTable td {
+    padding: 20px;
+    background: #fff;
+    position: relative;
+    background: rgba(0,0,0,0);
+}
+
+#baguaTable th::before, #baguaTable td::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    transform: rotateX(90deg) translateY(50%);
+    transform-origin: bottom;
+    transition: opacity 0.3s;
+}
+
+#baguaTable th:hover::before, #baguaTable td:hover::before {
+    opacity: 0;
+}
+
+#baguaTable th {
+    color: #333;
+    background: #f69d3c;
+}
+
+#baguaTable td {
+    color: #111;
+}
+
+</style>
+ </head>
+
+
+  <div id="gradient"></div>
+
+<body>
+
+  <table id="baguaTable">
+
+    <thead style="display:none">
+        <tr>
+            <th>Binary</th>
+            <th>Name</th>
+            <th>Char</th>
+            <th>Trigram</th>
+            <th>Vocal</th>
+            <th>Ijome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table rows will be inserted here by JavaScript -->
+
+    </tbody>
+
+  </table>
+
+</body>
+</html>
